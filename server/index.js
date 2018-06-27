@@ -1,7 +1,7 @@
 var express = require('express');
 var path = require('path');
 
-var page = require("./page.generator.js").page;
+var page = require("./page.generator.js");
 
 var app = express();
 var port = 8082;

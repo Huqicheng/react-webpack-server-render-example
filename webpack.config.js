@@ -3,6 +3,12 @@ var path = require('path');
 var assetsPath = path.join(__dirname, "public", "assets");
 var serverPath = path.join(__dirname, "server");
 
+var commonLoaders = [
+	{ test: /\.js$/, loader: "jsx-loader" },
+	{ test: /\.png$/, loader: "url-loader" },
+	{ test: /\.jpg$/, loader: "file-loader" },
+]
+
 module.exports = [
 	{
 		name: "browser",
@@ -12,7 +18,7 @@ module.exports = [
 			filename: 'entry.generator.js'
 		},
 		module: {
-	        loaders: [ 
+	        rules: [ 
 	            { test: /\.js/, loader: "jsx-loader" }
 	        ]
 	    }
@@ -21,18 +27,20 @@ module.exports = [
 	{
 		name: "server-side rending",
 		entry: './server/page.js',
+		target: "node",
 		output: {
 			path: serverPath,
 			filename: "page.generator.js",
 			// 使用page.generator.js的是nodejs，所以需要将
 			// webpack模块转化为CMD模块
 			library: 'page',
-			libraryTarget: 'commonjs' 
+			libraryTarget: 'commonjs2' 
 		},
 		module: {
-			loaders: [
-				{ test: /\.js$/, loader: 'jsx-loader' }
-			]
+			rules: [ 
+	            { test: /\.js/, loader: "jsx-loader" }
+	    	]
+
 		}
 	}
 ]
